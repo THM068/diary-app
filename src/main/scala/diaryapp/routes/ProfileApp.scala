@@ -10,8 +10,7 @@ final case class ProfileApp (profileService: ProfileService){
     case Method.GET -> !! / "profile" / id =>
       for {
         profile <- profileService.findProfile(id)
-
-      }yield Response.json(profile.toJson)
+      } yield Response.json(profile.toJson)
   }
 }
 object ProfileApp {
