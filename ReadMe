@@ -1,0 +1,3 @@
+The husbandry api provides endpoints to manage livestock.
+
+Authentication to faunaDB
