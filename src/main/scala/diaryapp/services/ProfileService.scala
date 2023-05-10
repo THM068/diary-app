@@ -11,6 +11,18 @@ case class ProfileService(profileRepository: ProfileRepository) {
     }
   }
 
+  def save(profile: Profile): Task[Profile] = {
+    ZIO.fromFuture { implicit ex =>
+      profileRepository.save(profile)
+    }
+  }
+
+  def nextId(): Task[String] = {
+    ZIO.fromFuture { implicit  ec =>
+      profileRepository.nextId()
+    }
+  }
+
 }
 
 object ProfileService {
