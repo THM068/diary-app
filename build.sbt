@@ -15,7 +15,8 @@ lazy val root = (project in file("."))
       "dev.zio" %% "zio-config" % "4.0.0-RC14",
       "dev.zio" %% "zio-config-typesafe" % "4.0.0-RC14",
       "dev.zio" %% "zio-config-magnolia" % "4.0.0-RC14",
-      "io.d11" %% "zhttp" % "2.0.0-RC11"
+      "io.d11" %% "zhttp" % "2.0.0-RC11",
+      "dev.zio" %% "zio-logging-slf4j2" % "2.1.12"
 
 ,
     ),

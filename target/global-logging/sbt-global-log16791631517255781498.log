@@ -1,5 +1,0 @@
-[0m[[0m[0mdebug[0m] [0m[0m> Exec({file:/Users/tma24/Workspace/husbandry-inventory/}root/cleanFiles, None, None)[0m
-[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: cleanFiles[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
-[0m[[0m[32msuccess[0m] [0m[0mTotal time: 0 s, completed 9 May 2023, 22:16:23[0m
-[0m[[0m[0mdebug[0m] [0m[0m> Exec(idea-shell, None, None)[0m

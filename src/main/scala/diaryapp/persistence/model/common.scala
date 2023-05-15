@@ -1,5 +1,7 @@
 package diaryapp.persistence.model
 
+import faunadb.values.{RefV, TimeV}
+
 /**
   * Base trait for implementing Domain Entities.
   *
@@ -42,3 +44,8 @@ case class Page[A](data: Seq[A], before: Option[String], after: Option[String])
   * @param after the after cursor – if any, it indicates to return the next Page of results after this Id (inclusive)
   */
 case class PaginationOptions(size: Option[Int], before: Option[String], after: Option[String])
+
+object DbTypes {
+  type DateCreated = TimeV
+  type CollectionRef = RefV
+}
