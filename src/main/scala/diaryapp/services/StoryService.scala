@@ -1,6 +1,6 @@
 package diaryapp.services
 import diaryapp.persistence.StoryRepository
-import diaryapp.persistence.model.Story
+import diaryapp.persistence.model.{Page, PaginationOptions, Story}
 import zio.{Task, URLayer, ZIO, ZLayer}
 
 import java.util.Objects
@@ -24,6 +24,13 @@ final case class StoryService(private val storyRepository: StoryRepository) {
   def nextId(): Task[String] = {
     ZIO.fromFuture { implicit ec =>
       storyRepository.nextId()
+    }
+  }
+
+  def findAll(): Task[Page[Story]] = {
+    implicit val page: PaginationOptions = PaginationOptions(size = Some(100), None, None)
+    ZIO.fromFuture { implicit ec =>
+      storyRepository.findAll()
     }
   }
 }

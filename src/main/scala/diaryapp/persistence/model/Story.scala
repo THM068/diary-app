@@ -27,3 +27,9 @@ object StoryData {
   implicit val encoder: JsonEncoder[StoryData] = DeriveJsonEncoder.gen[StoryData]
 }
 
+case class StoryDataList(stories: Seq[StoryData], before: Option[String], after: Option[String])
+object StoryDataList {
+  implicit val decoder: JsonDecoder[StoryDataList] = DeriveJsonDecoder.gen[StoryDataList]
+  implicit val encoder: JsonEncoder[StoryDataList] = DeriveJsonEncoder.gen[StoryDataList]
+}
+
