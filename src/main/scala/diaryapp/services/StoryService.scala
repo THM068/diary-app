@@ -27,8 +27,8 @@ final case class StoryService(private val storyRepository: StoryRepository) {
     }
   }
 
-  def findAll(): Task[Page[Story]] = {
-    implicit val page: PaginationOptions = PaginationOptions(size = Some(100), None, None)
+  def findAll(size: Int = 100): Task[Page[Story]] = {
+    implicit val page: PaginationOptions = PaginationOptions(size = Some(size), None, None)
     ZIO.fromFuture { implicit ec =>
       storyRepository.findAll()
     }

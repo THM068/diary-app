@@ -2,7 +2,7 @@ package diaryapp
 
 import zio.config.magnolia.deriveConfig
 import zio.{Config, ZIO, ZLayer}
-case class AppConfig(port: Int, faunaKey: String, endpoint: String)
+case class AppConfig(port: Int, faunaKey: String, endpoint: String, jwtSecret: String)
 case class FaunaConfig(faunaKey: String, endpoint: String)
 
 object AppConfig {
