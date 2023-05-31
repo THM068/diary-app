@@ -7,7 +7,7 @@ import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, EncoderOps, JsonDecoder, 
 
 import java.time.Clock
 
-case class UserDetails(name: String, profileId: String)
+case class UserDetails(name: Option[String], profileId: Option[String])
 
 object UserDetails {
   implicit val decode:JsonDecoder[UserDetails] = DeriveJsonDecoder.gen[UserDetails]

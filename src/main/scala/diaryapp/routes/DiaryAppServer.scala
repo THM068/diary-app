@@ -10,9 +10,10 @@ import zio.{ZIO, ZLayer}
 final case class DiaryAppServer(
           healthCheckApp: HealthCheckApp,
           profileApp: ProfileApp,
-          storyApp: StoryApp) {
+          storyApp: StoryApp,
+          authenticationApp: AuthenticationApp) {
 
-  val applications: Http[Any, Throwable, Request, Response] =healthCheckApp.routes ++ profileApp.routes ++ storyApp.routes @@ Middleware.debug
+  val applications: Http[Any, Throwable, Request, Response] =healthCheckApp.routes ++ profileApp.routes ++ storyApp.routes ++ authenticationApp.routes @@ Middleware.debug
 
   def runServer(): ZIO[Any, Throwable, Unit] = for {
     appConfig <- ZIO.config[AppConfig](AppConfig.config)
@@ -24,6 +25,6 @@ final case class DiaryAppServer(
 }
 object DiaryAppServer {
 
-  val layer: ZLayer[HealthCheckApp with ProfileApp with StoryApp, Nothing, DiaryAppServer] =
+  val layer: ZLayer[HealthCheckApp with ProfileApp with StoryApp with AuthenticationApp, Nothing, DiaryAppServer] =
     ZLayer.fromFunction(DiaryAppServer.apply _)
 }

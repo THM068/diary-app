@@ -1,0 +1,20 @@
+# fly.toml app configuration file generated for diary-app on 2023-05-30T15:10:54+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "diary-app"
+primary_region = "lhr"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+[env]
+DIARYAPP_ENDPOINT="https://db.fauna.com"
+DIARYAPP_FAUNAKEY="fnAFDjGVp-ACUGCIMu7JfuLbKL4wcRrZ-0T-U8bC"
+DIARYAPP_JWTSECRET="byJJKJM4fYbwS07P9xrP9rPNMhoabzg44Js8_g37OMcYI5DqKsWJlR5p0K7PD7RsQ0IW6laVq3SsYG_JEeqjhhC0cakgKORKrlFaLg6Cc4KJRVqu5bpQpQunECXgw59H7w7IsehzTwwijBdI48J2Vr6"
+DIARYAPP_PORT=8080

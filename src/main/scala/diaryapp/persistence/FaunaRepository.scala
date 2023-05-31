@@ -12,11 +12,12 @@ import zio.{URLayer, ZIO, ZLayer}
 import java.util.concurrent.Executors
 import scala.concurrent.{ExecutionContext, Future}
 
-trait FaunaRepository[A <: Entity] extends Repository[A] with FaunaRepository.Implicits {
-
-  val executorService = Executors.newFixedThreadPool(10)
-  implicit val ec = ExecutionContext.fromExecutor(executorService)
-
+object FutureExecutionContext {
+  val executorService = Executors.newFixedThreadPool(5)
+  implicit val ex = ExecutionContext.fromExecutor(executorService)
+}
+trait FaunaRepository[A <: Entity] extends Repository[A] with FaunaRepository.Implicits  {
+  import FutureExecutionContext._
   protected val client: FaunaClient
 
   protected val className: String

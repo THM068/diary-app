@@ -6,7 +6,7 @@ import zio.test._
 import java.io.IOException
 object HelloWorldSpec extends ZIOSpecDefault {
   override def spec: Spec[TestEnvironment with Scope, Any] = {
-    test("") {
+    test("abc") {
       for {
         _ <- sayHello
         output <- TestConsole.output
