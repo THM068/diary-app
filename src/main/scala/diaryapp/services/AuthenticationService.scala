@@ -48,9 +48,7 @@ case class AuthenticationServiceLive(accountRepository: AccountRepository,faunaD
           LOGIN_TO_ACCOUNT_FUNCTION, Arr(Value(loginCredentials.email), Value(loginCredentials.password))
         ))
         partialAccount = value.to[Accountesponse].get
-
       } yield {
-        println("**********" + partialAccount)
         partialAccount
       }
     }

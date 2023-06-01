@@ -3,14 +3,15 @@ package diaryapp.routes
 import diaryapp.persistence.model.StoryData._
 import diaryapp.persistence.model.{Page, Story, StoryData, StoryDataList}
 import diaryapp.routes.ServerUtils.parseBody
-import diaryapp.services.StoryService
+import diaryapp.services.{JWTAuthenticationService, StoryService}
 import faunadb.values.{Native, RefV, TimeV}
 import zhttp.http._
+import zhttp.http.Middleware.bearerAuth
 import zio._
 import zio.json.EncoderOps
 
 import java.time.Instant
-case class StoryApp(storyService: StoryService) {
+case class StoryApp(storyService: StoryService, jwtAuthenticationService: JWTAuthenticationService) {
 
   def routes(): Http[Any, Throwable, Request, Response] = Http.collectZIO[Request] {
     case Method.GET -> !! / "story" =>
@@ -39,7 +40,7 @@ case class StoryApp(storyService: StoryService) {
           val response = Response.json(Story.toStoryData(savedStory).toJson)
           response.copy(status = Status.Created)
       }
-  }
+  } @@ bearerAuth(jwtAuthenticationService.jwtDecode(_).isDefined)
 
   def createListOfStories(page: Page[Story]): Seq[StoryData] = page.data.map { story =>
     StoryData(
@@ -53,5 +54,5 @@ case class StoryApp(storyService: StoryService) {
 }
 
 object StoryApp {
-  val layer:URLayer[StoryService, StoryApp] = ZLayer.fromFunction(StoryApp.apply _)
+  val layer:URLayer[JWTAuthenticationService with StoryService, StoryApp] = ZLayer.fromFunction(StoryApp.apply _)
 }
