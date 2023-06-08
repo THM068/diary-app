@@ -1,5 +1,6 @@
 package diaryapp.routes
 
+import diaryapp.persistence.model.Message
 import diaryapp.routes.ServerUtils.parseBody
 import zio._
 import zhttp.http._
@@ -15,11 +16,16 @@ case class AuthenticationApp(authenticationService: AuthenticationService, jwtAu
  import JwtToken._
   def routes(): Http[Any, Throwable, Request, Response] = Http.collectZIO[Request] {
     case req @ Method.POST -> !! / "login" =>
-      for {
+      (for {
         loginCredentials <- parseBody[LoginCredentials](req)
         loginResponse <- authenticationService.login(loginCredentials)
         jwtResult  =  jwtAuthenticationService.jwtEncode(UserDetails(profileId = loginResponse.profileId, name = loginResponse.name))
-      } yield Response.json(JwtToken(token = jwtResult).toJson)
+      } yield Response.json(JwtToken(token = jwtResult).toJson)).catchSome {
+        case e: Exception =>
+          ZIO.logError(e.getMessage)
+          val message = Message(message = "Login failed", service = "authentication-service")
+          ZIO.succeed(Response.json(message.toJson))
+      }
 
   }
 }

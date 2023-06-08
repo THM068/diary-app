@@ -8,6 +8,9 @@ import faunadb.values.{Codec, Value}
 import zio._
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 
+import scala.concurrent.Future
+import scala.util.{Success, Try}
+
 object LoginCredentials {
   implicit val decoder: JsonDecoder[LoginCredentials] = DeriveJsonDecoder.gen[LoginCredentials]
   implicit val encoder: JsonEncoder[LoginCredentials] = DeriveJsonEncoder.gen[LoginCredentials]
@@ -47,6 +50,7 @@ case class AuthenticationServiceLive(accountRepository: AccountRepository,faunaD
         value <- faunaClient.query(Call(
           LOGIN_TO_ACCOUNT_FUNCTION, Arr(Value(loginCredentials.email), Value(loginCredentials.password))
         ))
+        c =  Console.printLine(value)
         partialAccount = value.to[Accountesponse].get
       } yield {
         partialAccount

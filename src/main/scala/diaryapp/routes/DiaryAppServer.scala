@@ -13,7 +13,7 @@ final case class DiaryAppServer(
           storyApp: StoryApp,
           authenticationApp: AuthenticationApp) {
 
-  val applications: Http[Any, Throwable, Request, Response] = authenticationApp.routes ++ healthCheckApp.routes ++ storyApp.routes ++ profileApp.routes   @@ Middleware.debug
+  val applications: Http[Any, Throwable, Request, Response] = healthCheckApp.routes ++ authenticationApp.routes  ++ storyApp.routes ++ profileApp.routes   @@ Middleware.debug
 
   def runServer(): ZIO[Any, Throwable, Unit] = for {
     appConfig <- ZIO.config[AppConfig](AppConfig.config)
