@@ -22,9 +22,9 @@ case class AuthenticationApp(authenticationService: AuthenticationService, jwtAu
         jwtResult  =  jwtAuthenticationService.jwtEncode(UserDetails(profileId = loginResponse.profileId, name = loginResponse.name))
       } yield Response.json(JwtToken(token = jwtResult).toJson)).catchSome {
         case e: Exception =>
-          ZIO.logError(e.getMessage)
-          val message = Message(message = "Login failed", service = "authentication-service")
-          ZIO.succeed(Response.json(message.toJson))
+          ZIO.succeed(Response.json(
+            Message(message = "Your username or password is incorrect", service = "authentication-service").toJson)
+            .setStatus(Status.Forbidden))
       }
 
   }

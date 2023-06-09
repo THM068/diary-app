@@ -8,7 +8,7 @@ object ServerUtils {
   def parseBody[A: JsonDecoder](request: Request): IO[AppError, A] =
     for {
       body   <- request.body.asString.orElseFail(AppError.MissingBodyError)
-      parsed <- ZIO.from(body.fromJson[A]).mapError(msg => new AppError.JsonDecodingError(msg))
+      parsed <- ZIO.from(body.fromJson[A]).mapError(msg => AppError.JsonDecodingError(msg))
     } yield parsed
 
 }
